@@ -1,0 +1,175 @@
+step to connect GIT, and other tools to jenkins
+
+step1:-  Go to google chrome--> localhost:8080 ->login
+step2:-  Go to manage jenkins on left side of jenkins dashboard -> Manage Plugins -> Available -> Select Maven Integration & Green Balls 
+Step3:- Go to new item  ---> Maven Project
+step4:- Now go to manage Jenkins -> Global tool Configuration--> go to add JDK
+        Unceheck this install automatically option (Because it's already install in the system)
+		NAME -> JAVA
+		JAVA_HOME -> copy your JDK path
+step 5:- Now go to Maven
+         Name: Maven
+		 Maven_Home -> Maven path
+		 
+		
+
+
+
+All plugins are presented inside the Available.
+Whenever we execute any task in jenkins if it's successful executed --> blue ball is showing otherwise Red Ball showing
+Maven is a build tool, it is used to convert you code into Machine level execution
+
+this is done by maven
+afte doing all the things go to github account just copy the url of repositiories and done the clone on your local cmd
+step1: git clone <link of repositiories>
+step2: dir
+step3: mvn clean package --> this command convert your code into machine level language
+step4: 
+
+Maven build code activity is done by Jenkins
+
+Maven Project:-
+Add Git Maven JDK path into plugins
+after that give the repository path
+then click on build project
+if it is there any issue check configuration, change the configuration and find it
+Maven Project or Maven activity is used to build the code
+
+Maven process done by Jenkins
+a) Now go to Jnekins -> New item -> Entername -> Mymavenproject -> click on OK
+b) Socurce code Management -> GIT
+c) Repository_URL:-> github
+d) Build option -> Root POM -> POM.xml
+e) Goals and option -> clean Package
+f) Go to jenkins home page click on maven project and click on build project.
+
+
+Scheduled Project:
+In this type of project after a scheduled time it check again and build project.
+After a particular time it checks again and build again.Changes done in code or not.
+
+Scheduled Project done by Jenkins:
+a) clik on any project -> configure-> build triggers ->build Periodically
+b) ***** -> save   (Min, Hours, Day, months, week)
+c) It can see automatic builds after every 1 min,
+d) You can manually trigger build as well (You can build project manually when you want)
+
+
+Source Code Polling(Poll SCM):
+In this project or activity whenever we done the changes in our code only then code build otherwise it check only after every minute.
+Basically It has a project file and github have a project file. In every check it simply go and compare both the files, is there any changes occur. if it occur then it automatically build project.
+
+Source Code project done by Jenkins:
+a) Now go to Jenkins Homepage
+b) go to MyMavenProject -> configure
+c) Now go to build trigger and click on POLL SCM
+d) Now in scheduled fill ***** -> save
+e) Now go to github account -> do some changes in README.md -> commit changes
+f) You can see after 1 min it build automatically.
+
+
+Linked project:
+
+When we connect one job/project to another job that is called Linked Project.
+
+example -> JobA ---------------> JobB --------------------> Job C -----------------------> Job D
+                connected by           connected by                Connected by
+
+Above example shown that when JobA is finish Job B automatically start after that when JobB finished JobC automatucally start.
+
+
+In this case two type of process follow
+a) UpStream Linked Project
+b) DownStream Linked Project
+
+a) UpStream Linked Project:- In UpStream project when JOb A is completed it it goes to JoB B and infrom JoBA is completed and now you can start.
+                             There is a POST Build Option present, inside that we write a our next job name. it takes simply run that automatically.
+                             In this project Job A is behvae like a active member.
+
+b) DownStream Linked Project:- In Downstream project Job B comes to Job A ask again and again Job A is completed or not.
+                               There is a Pre buils option Present, inside that we write a our Previous job name. When Job B recevide the reponse from Job A then Job B                        start.
+                               In this Project job B behave like active member.
+
+By My Views option you can make seprate folder.
+
+
+
+UserManagement in Jenkins:
+
+a) why we need to manage user in Jenkins?
+Jenkins is a server not software. Don't need to install on every machine. we can access it by ip_address:port_number.
+If Access in Company_Zone. Use Privateip:port
+If Access outside use Public zone. Publicip:Portno
+
+Now in Jenkins only admin user is present. We can't give admin permission to every member. In that case we need to create users.
+
+For creating the users:-
+a) Goto Jenkins HomePage ---> Manage Jenkins --> Manage Users
+b) create two users ---> Bhupinder and Rajput
+  { By Default Bhupinder have all the permission which a admin user have}
+
+Now we can't give admin power to everyone
+
+to remove this problem:
+a) Login as admin again
+b) Go to manage Jenkins --> Manage Plugins
+   ---> Search "Role Based Authentication Strategy "
+   ----> Install it without restart
+
+c) Go to jenkins home -> Manage Jenkins
+   ---> Configure Global Security
+   ----> Select Role Based Authority
+Now if you login as a Bhupinder user, It gives invalid login
+
+
+In that case we need to give permission
+Attach Permission in a user
+Go to Jenkins --> Manage and assign Role --> Manage Roles
+Role to add -> Employee
+go to item project --> add Developer and tester
+             Pattern --> dev* and test*
+Then Assign Roles
+User/group to add ---> Bhupinder and Rajput
+
+Item Roles
+
+Usergroup  Developer   testers
+Bhupinder   Yes
+Rajput                  Yes
+
+Now user Bhupinder shows all dev related project and tester shows all test related project.
+
+
+
+
+Master and Slave Architecture:
+Jenkins work on master and slave architecture. Inside that one master is always present. Master take care of all the task.
+Due to load balance we create slave inside it. to balance the load.
+
+Jenkins have thier directory Inside Local Disk C Jenkins folder. Job is present inside that
+when we create Slave inside it, required to create slave directory in jenkins folder for ever slave.
+After that to connect slave node to directory by agent.jar.
+
+There is no rule defined to set the jobs or to balance the load.May be one job is created by master so another job created by slave2.
+
+so come out over problem, we used label concept there.
+By using this concept defined label inside the job and also defined inside the slave node or master node.
+Now work is fixed.
+
+to craete the slave node in jenkins
+a) Go on Jenkins dashboard click on New nodes
+b) Now create a directory for slave 1 node
+c) after that go on Launch Method
+   inside that click on Launch agent via execution of command on the master
+d) Click on Launch command
+   When you click on Launch command, it says to install agent.jar file. so firstly download this file.
+   Now copy this file from download section and paste it into C drive.
+   Inside Launch commande paste path of agent.jar file.
+
+
+ 
+
+
+                                
+
+ 
