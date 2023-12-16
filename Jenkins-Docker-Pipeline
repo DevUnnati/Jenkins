@@ -1,0 +1,31 @@
+By using this push image on Docker Hub with Credentials
+pipeline {
+    agent any
+
+    stages {
+        stage('Code Build') {
+            steps {
+                echo 'Building your application'
+                sh 'cd /home/ubuntu/jenkins_docker_image/django'
+            }
+        }
+        stage('Docker Image') {
+            steps {
+                echo 'Create Docker Image'
+                sh 'docker build -t jenkins-docker:latest .'
+            }
+        }
+        stage('login into DockerHub') {
+            steps {
+                echo 'login to dockerHub'
+                sh 'docker login -u "dockerhublogin" -p "dockerhubPassword"'
+            }
+        }
+        stage('push docker image') {
+            steps {
+                sh 'docker tag jenkins-docker:latest chanchal@8765/jenkins-docker:latest'
+                sh 'docker push chanchal@8765/jenkins-docker:latest'
+            }
+        }
+    }
+}
