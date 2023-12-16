@@ -1,0 +1,32 @@
+pipeline{
+    agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+            }
+        stages{
+            stage('Clone the repo'){
+                steps{
+                    echo 'Cloning the repository:'
+                    git 'https://github.com/DevUnnati/node-todo-cicd.git'
+}
+}
+            stage('Build'){
+                steps{
+                    echo 'Building the ToDo application on Docker'
+                    sh 'docker build . -t jenkins-docker:latest'
+}
+}
+            stage('login into DockerHub') {
+            steps {
+                echo 'login to dockerHub'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('push docker image') {
+            steps {
+                sh 'docker tag jenkins-docker:latest chanchal8765/jenkins-docker:latest'
+                sh 'docker push chanchal8765/jenkins-docker:latest'
+            }
+        }
+}
+}
